@@ -5,7 +5,8 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-save_wilfred = "FdRaNwYGHGyW4422wN2E4GfHLBc1G9eCAvBdBasbECUM"
+client = "EbAkjcBwhekziiea2efYAq98yzZavWczDqbtsbmcvcJF"
+server = "C2FTqqDJzzaBdavjdvtRmA9bSkmDZWkmh6qmhN4wpSvG"
 
 [registry]
 url = "https://api.apr.dev"

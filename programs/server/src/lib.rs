@@ -1,9 +1,9 @@
 use anchor_lang::prelude::*;
 
-declare_id!("FdRaNwYGHGyW4422wN2E4GfHLBc1G9eCAvBdBasbECUM");
+declare_id!("C2FTqqDJzzaBdavjdvtRmA9bSkmDZWkmh6qmhN4wpSvG");
 
 #[program]
-pub mod save_wilfred {
+pub mod server {
     use super::*;
 
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
