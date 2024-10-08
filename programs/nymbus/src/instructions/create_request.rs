@@ -4,11 +4,10 @@ use base64::prelude::*;
 
 #[derive(Accounts)]
 pub struct CreateRequest<'info> {
-    #[account(mut)]
     payer: Signer<'info>,
 
     /// CHECK: only used to receive fees
-    #[account(mut, address = pubkey!("BUSvUu7YHKTJCYntTfv35D2KTNmrZZKgMKZ2X852XLcn"))]
+    #[account(address = pubkey!("BUSvUu7YHKTJCYntTfv35D2KTNmrZZKgMKZ2X852XLcn"))]
     fee_account: UncheckedAccount<'info>,
 
     #[account(address = system_program::ID)]
