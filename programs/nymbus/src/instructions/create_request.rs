@@ -4,10 +4,11 @@ use base64::prelude::*;
 
 #[derive(Accounts)]
 pub struct CreateRequest<'info> {
+    #[account(mut)]
     payer: Signer<'info>,
 
     /// CHECK: only used to receive fees
-    #[account(address = pubkey!("BUSvUu7YHKTJCYntTfv35D2KTNmrZZKgMKZ2X852XLcn"))]
+    #[account(mut, address = pubkey!("BUSvUu7YHKTJCYntTfv35D2KTNmrZZKgMKZ2X852XLcn"))]
     fee_account: UncheckedAccount<'info>,
 
     #[account(address = system_program::ID)]
@@ -32,7 +33,7 @@ pub fn create_request<'info>(
                 to: fee_account.to_account_info(),
             },
         ),
-        100_000,
+        1_000_000,
     )?;
 
     let body_encoded = body
