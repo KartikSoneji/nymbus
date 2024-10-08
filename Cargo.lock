@@ -642,6 +642,8 @@ name = "client"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",
+ "nymbus",
+ "serde_json",
 ]
 
 [[package]]
