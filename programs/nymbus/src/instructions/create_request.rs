@@ -19,7 +19,7 @@ pub fn create_request<'info>(
     ctx: Context<'_, '_, '_, 'info, CreateRequest<'info>>,
     method: String,
     url: String,
-    data: Option<Vec<u8>>,
+    body: Option<Vec<u8>>,
     callback_config: CallbackConfig,
 ) -> Result<()> {
     let payer = &ctx.accounts.payer;
@@ -36,28 +36,29 @@ pub fn create_request<'info>(
         100_000,
     )?;
 
-    let data_encoded = data
-        .map(|data| BASE64_STANDARD.encode(data))
+    let body_encoded = body
+        .map(|body| BASE64_STANDARD.encode(body))
         .unwrap_or("-".to_string());
     let accounts = callback_config
         .accounts
         .iter()
-        .map(|(mutable, key)| format!("{} {key}", if *mutable { 'w' } else { '-' }))
+        .map(|meta| meta.to_string())
         .collect::<Vec<_>>()
         .join(" | ");
-    msg!(
+    let program = callback_config.program;
+    let instruction_prefix_encoded = BASE64_STANDARD.encode(callback_config.instruction_prefix);
+    msg!(format!(
         "\
             --- start ---\n\
             method:{method}\n\
             url:{url}\n\
-            data:{data_encoded}\n\
+            body:{body_encoded}\n\
             program:{program}\n\
             accounts:{accounts}\n\
-            data_prefix:{data_prefix}\
-        ",
-        program = callback_config.program,
-        data_prefix = BASE64_STANDARD.encode(callback_config.data_prefix),
-    );
+            instruction_prefix:{instruction_prefix_encoded}\
+        "
+    )
+    .as_str());
 
     Ok(())
 }

@@ -5,8 +5,8 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
+nymbus = "nymNxzEAxLvovp5CywNsnEgHpfRGAX3QLFy21GGt2uy"
 client = "EbAkjcBwhekziiea2efYAq98yzZavWczDqbtsbmcvcJF"
-server = "C2FTqqDJzzaBdavjdvtRmA9bSkmDZWkmh6qmhN4wpSvG"
 
 [registry]
 url = "https://api.apr.dev"

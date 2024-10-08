@@ -15,9 +15,9 @@ pub mod nymbus {
         ctx: Context<'_, '_, '_, 'info, CreateRequest<'info>>,
         method: String,
         url: String,
-        data: Option<Vec<u8>>,
+        body: Option<Vec<u8>>,
         callback_config: CallbackConfig,
     ) -> Result<()> {
-        instructions::create_request(ctx, method, url, data, callback_config)
+        instructions::create_request(ctx, method, url, body, callback_config)
     }
 }
