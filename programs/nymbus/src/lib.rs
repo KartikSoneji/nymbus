@@ -1,16 +1,23 @@
-use anchor_lang::prelude::*;
+pub mod instructions;
+pub mod state;
 
-declare_id!("2Ytr3pUMvR5ts169xb4r4CXTNf6gJfM4c2KA9ekvUfGr");
+use crate::instructions::*;
+use anchor_lang::prelude::*;
+use state::CallbackConfig;
+
+declare_id!("nymNxzEAxLvovp5CywNsnEgHpfRGAX3QLFy21GGt2uy");
 
 #[program]
 pub mod nymbus {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        msg!("Greetings from: {:?}", ctx.program_id);
-        Ok(())
+    pub fn create_request<'info>(
+        ctx: Context<'_, '_, '_, 'info, CreateRequest<'info>>,
+        method: String,
+        url: String,
+        data: Option<Vec<u8>>,
+        callback_config: CallbackConfig,
+    ) -> Result<()> {
+        instructions::create_request(ctx, method, url, data, callback_config)
     }
 }
-
-#[derive(Accounts)]
-pub struct Initialize {}
