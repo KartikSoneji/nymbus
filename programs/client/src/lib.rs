@@ -6,7 +6,7 @@ use nymbus::{
     state::{AccountMeta, CallbackConfig},
 };
 
-declare_id!("EbAkjcBwhekziiea2efYAq98yzZavWczDqbtsbmcvcJF");
+declare_id!("nci1HQqu8h6tkR5vps8CTfpuJ3wZsNETL8CfFC44Gwa");
 
 #[program]
 pub mod client {

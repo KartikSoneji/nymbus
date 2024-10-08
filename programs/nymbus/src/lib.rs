@@ -5,7 +5,7 @@ use crate::instructions::*;
 use anchor_lang::prelude::*;
 use state::CallbackConfig;
 
-declare_id!("nymNxzEAxLvovp5CywNsnEgHpfRGAX3QLFy21GGt2uy");
+declare_id!("nym2L1Yw53M1wZ5KWCWbjLccL8AJmPq7PLSapatgkrx");
 
 #[program]
 pub mod nymbus {
