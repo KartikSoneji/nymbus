@@ -44,20 +44,24 @@ pub fn create_request<'info>(
         .map(|meta| meta.to_string())
         .collect::<Vec<_>>()
         .join(" | ");
-    let program = callback_config.program;
     let instruction_prefix_encoded = BASE64_STANDARD.encode(callback_config.instruction_prefix);
-    msg!(format!(
+    msg!(
         "\
             --- start ---\n\
-            method:{method}\n\
-            url:{url}\n\
-            body:{body_encoded}\n\
-            program:{program}\n\
-            accounts:{accounts}\n\
-            instruction_prefix:{instruction_prefix_encoded}\
-        "
-    )
-    .as_str());
+            method:{}\n\
+            url:{}\n\
+            body:{}\n\
+            program:{}\n\
+            accounts:{}\n\
+            instruction_prefix:{}\
+        ",
+        method,
+        url,
+        body_encoded,
+        callback_config.program,
+        accounts,
+        instruction_prefix_encoded,
+    );
 
     Ok(())
 }
