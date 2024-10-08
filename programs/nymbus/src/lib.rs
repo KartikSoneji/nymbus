@@ -1,9 +1,9 @@
 use anchor_lang::prelude::*;
 
-declare_id!("C2FTqqDJzzaBdavjdvtRmA9bSkmDZWkmh6qmhN4wpSvG");
+declare_id!("2Ytr3pUMvR5ts169xb4r4CXTNf6gJfM4c2KA9ekvUfGr");
 
 #[program]
-pub mod server {
+pub mod nymbus {
     use super::*;
 
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
