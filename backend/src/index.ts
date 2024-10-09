@@ -1,4 +1,3 @@
-
 import { Connection, PublicKey, Transaction, TransactionInstruction, Account, Keypair, ComputeBudgetProgram } from "@solana/web3.js";
 import dotenv from "dotenv";
 import * as https from 'https';
@@ -34,47 +33,46 @@ const solanaRpcConnection = new Connection(process.env.RPC_ENDPOINT!);
 
 function parseLogsArray(logs: string[]): ParsedRequest | null {
   let parsedRequest: Partial<ParsedRequest> = {};
-  let isStart = false;
+  
+  // Find the log entry that contains our data
+  const dataLog = logs.find(log => log.includes("--- start ---"));
+  
+  if (!dataLog) return null;
 
-  for (const log of logs) {
-    if (log.includes("--- start ---")) {
-      isStart = true;
-      continue;
+  // Split the data log into lines
+  const dataLines = dataLog.split('\n');
+
+  // Process each line
+  dataLines.forEach(line => {
+    const [key, ...valueParts] = line.split(':');
+    const value = valueParts.join(':').trim(); // Rejoin the value parts in case of colons in the value
+
+    switch (key.trim()) {
+      case 'method':
+        parsedRequest.method = value;
+        break;
+      case 'url':
+        parsedRequest.url = value;
+        break;
+      case 'body':
+        parsedRequest.data = value === '-' ? null : value;
+        break;
+      case 'program':
+        parsedRequest.program = value;
+        break;
+      case 'accounts':
+        parsedRequest.accounts = [{ // Changed to handle single account
+          pubkey: value.split(' ')[1], // Get the pubkey part
+          isWriteable: value.split(' ')[0] === 'w'
+        }];
+        break;
+      case 'instruction_prefix':
+        parsedRequest.instruction_prefix = value;
+        break;
     }
+  });
 
-    if (isStart) {
-      const [key, ...valueParts] = log.split(':');
-      const value = valueParts.join(':').trim(); // Rejoin the value parts in case the URL contains colons
-      switch (key.trim()) {
-        case 'method':
-          parsedRequest.method = value;
-          break;
-        case 'url':
-          parsedRequest.url = value;
-          break;
-        case 'data':
-          parsedRequest.data = value === '-' ? null : value;
-          break;
-        case 'program':
-          parsedRequest.program = value;
-          break;
-        case 'accounts':
-          parsedRequest.accounts = value.split('|').map(account => {
-            const [writeFlag, pubkey] = account.trim().split(' ');
-            return {
-              pubkey: pubkey,
-              isWriteable: writeFlag === 'w'
-            };
-          });
-          break;
-        case 'instruction_prefix':
-          parsedRequest.instruction_prefix = value;
-          break;
-      }
-    }
-  }
-
-  return isStart && parsedRequest.method && parsedRequest.url
+  return (parsedRequest.method && parsedRequest.url)
     ? parsedRequest as ParsedRequest
     : null;
 }
@@ -251,7 +249,7 @@ async function main() {
 
   // Uncomment the following to use Solana log listening
 
-  solanaRpcConnection.onLogs(LISTEN_ADDRESS, async (logData: any) => {
+  solanaRpcConnection.onLogs(LISTEN_ADDRESS, async (logData) => {
     console.log("Received logs");
     console.log(logData);
     
