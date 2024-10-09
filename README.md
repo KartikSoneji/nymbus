@@ -1,5 +1,6 @@
-<img src="https://github.com/user-attachments/assets/f197f1ac-09da-4336-8e16-e9e002c972db" width="100" alt="Logo">
-
+<p align="center">
+  <img src="./logo.jpeg" width="512" alt="Logo">
+</p>
 
 # Nymbus
 
