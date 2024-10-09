@@ -1,3 +1,6 @@
+<img src="https://github.com/user-attachments/assets/f197f1ac-09da-4336-8e16-e9e002c972db" width="100" alt="Logo">
+
+
 # Nymbus
 
 Nymbus enables smart contracts to interact with off-chain resources through HTTP API calls
