@@ -124,10 +124,17 @@ async function createSolanaTransaction(parsedRequest: ParsedRequest, apiResponse
     isSigner: false,
     isWritable: account.isWriteable
   }));
+  accounts.unshift({
+    pubkey: FEEPAYER_WALLET.publicKey,
+    isSigner: true,
+    isWritable: false
+  });
 
   const instructionPrefix = Buffer.from(parsedRequest.instruction_prefix, 'base64');
   const responseData = Buffer.from(apiResponse, 'utf-8');
-  const instructionData = Buffer.concat([instructionPrefix, responseData]);
+  const responseDataLength = Buffer.alloc(4);
+  responseDataLength.writeUInt32LE(responseData.length);
+  const instructionData = Buffer.concat([instructionPrefix, responseDataLength, responseData]);
 
   const instruction = new TransactionInstruction({
     programId,
